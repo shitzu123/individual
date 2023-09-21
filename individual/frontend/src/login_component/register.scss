@@ -1,0 +1,118 @@
+// primary properties
+$primary-background: rgb(25,16,91);
+
+
+.signup-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 4%;
+    max-height: 60%;
+    
+  }
+  
+  .signup-left {
+    flex: 1;
+    background-size: cover; /* or contain, or specific dimensions */
+    background-repeat: no-repeat;
+    
+  }
+
+  h1{
+    color: $primary-background;
+  }
+  img{
+    max-width: 100%;
+    height: 100%;
+  }
+
+  form{
+    margin-left: 15%;
+  }
+  .signup-right {
+    flex: 1;
+    padding-top: 3%;
+    background-color: rgb(238, 237, 237);
+  }
+  
+  .signup-right h2 {
+    margin-bottom: 10%;
+    margin-top: 0;
+    text-align: center;
+    font-size: 24px;
+    color: $primary-background;
+  }
+  
+  .signup-right form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signup-right input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .signupbutton {
+    background-color: $primary-background;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    
+  }
+  .signupbutton{
+    width: 35%;
+    margin-left: 5%;
+  }
+  .olduserbutton{
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .olduserbutton{
+    width: 40%;
+  }
+
+  .olduserbutton:hover{
+    color:white !important;
+  }
+
+
+.input-container {
+    position: relative;
+  }
+  
+  .input-container i {
+    position: absolute;
+    padding:  0 10px; 
+    top: 25%;
+    transform: translateY(-50%);
+    color: #ccc;
+    
+  }
+  
+  .input-container input {
+    padding-left: 30px;
+    border: none; 
+    border-bottom: 1px solid #ccc; 
+    width: 60%; 
+    outline: none; 
+    margin-bottom: 8%;
+  }
+  
+  
+  .icon {
+    margin-right: 10px; /* Adjust this margin as needed to control the spacing between the icon and input */
+    flex:none;
+  }
+
+
+
+ 
+  
