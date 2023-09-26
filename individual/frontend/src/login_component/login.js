@@ -15,35 +15,23 @@ function Login() {
     e.preventDefault();
 
     if (email.trim() !== '' && password.trim() !== '') {
-      console.log('hi');
+
       try {
-        console.log('before');
         const response = await login(email,password);
-        console.log('after')
-        console.log('response',response)
-        console.log(response.message);
-        // const response = await axios.post('http://localhost:3001/api/login', {
-        //   email,
-        //   password,
-        // });
-        // console.log("adminstatus",response.data.user.isadmin)
-        // const adminStatus=response.data.user.isadmin
-        console.log("response from backend",response.data.message);
-        if(response.message==='User logged')
+        console.log(response)
+        if(response.message==='User logged' && response.role ==='user')
         {
           toast.success("Login successful")
           setTimeout(()=>{
-            navigate('/userform')
-          },3000)
+            navigate('/user_page')
+          },2000)
+        }else if(response.message==='User logged' && response.role ==='admin')
+        {
+          toast.success("Login successful")
+          setTimeout(()=>{
+            navigate('/view_event')
+          },2000)
         }
-        // else if(response.data.message==='Login successful.')
-        // {
-        //   toast.success(" Admin Login successful")
-        //   setTimeout(()=>{
-        //     navigate('/admin_training')
-        //   },3000)
-        // }
-
        
       } catch (error) {
         console.error('Sign-in error:', error);
@@ -59,8 +47,8 @@ function Login() {
         <img src="../login/music.jpg" alt="Login" />
       </div>
       <div className="login-right">
-        <h1 className="h2">Login</h1>
-        <form onSubmit={validationReg}>
+        <h1 className="h1">Login</h1>
+        <form className="loginForm" onSubmit={validationReg}>
           <div className="login-input-container">
             <i className="fa-regular fa-envelope"></i>
             <input

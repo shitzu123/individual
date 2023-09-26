@@ -1,15 +1,13 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+
+
 import './style.scss'
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { addevent } from '../services/signuploginservice';
 
 
 import View_training from './view_trainings';
@@ -22,11 +20,10 @@ function MyFormModal(props) {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [training, setTraining] = useState({
-        organizer_name: '',
-        Place: '',
-        skill: '',
+        event_organizer: '',
+        place: '',
         description: '',
-        Genre: 'Sports', // Default domain value
+        domain: '', // Default domain value
         seats: 1, // Default seats value
     });
 
@@ -35,18 +32,16 @@ function MyFormModal(props) {
         console.log("working", training);
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5001/api/data', training, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.status === 200) {
+            console.log('hi')
+            const response = await addevent(training,startDate,endDate);
+            console.log("response from backend",response)
+            if (response.statusCode === 200) {
                 console.log('Scheduled training:', response.data);
             } else {
                 console.error('Set training failed');
             }
         } catch (error) {
+            console.log('hello')
             console.error('Registering error:', error);
         }
     };
@@ -76,9 +71,9 @@ function MyFormModal(props) {
                                         type="text"
                                         id="trainingName"
                                         placeholder="Event Name"
-                                        value={training.training_name}
+                                        value={training.event_organizer}
                                         onChange={(e) =>
-                                            setTraining({ ...training, training_name: e.target.value })
+                                            setTraining({ ...training, event_organizer: e.target.value })
                                         }
                                         required
                                     />
@@ -88,27 +83,14 @@ function MyFormModal(props) {
                                     <input
                                         type="text"
                                         id="trainer"
-                                        placeholder="Trainer"
-                                        value={training.trainer}
+                                        placeholder="Place"
+                                        value={training.place}
                                         onChange={(e) =>
-                                            setTraining({ ...training, trainer: e.target.value })
+                                            setTraining({ ...training, place: e.target.value })
                                         }
                                         required
                                     />
                                 </div>
-                                {/* <div className="form-group">
-            <label for="skillTitle">Skill Title</label>
-            <input
-              type="text"
-              id="skillTitle"
-              placeholder="Title"
-              value={training.skill}
-              onChange={(e) =>
-                setTraining({ ...training, skill: e.target.value })
-              }
-              required
-            />
-          </div> */}
                                 <div className="form-group">
                                     <label for="description">Description</label>
                                     <textarea
@@ -133,7 +115,7 @@ function MyFormModal(props) {
                                         <option value="">Select One</option>
                                         <option value="Sports">Sports</option>
                                         <option value="Music&Dance">Music & Dance</option>
-                                        <option value="Health">Yoga</option>
+                                        <option value="Yoga">Yoga</option>
                                         <option value="Food">Food Festival</option>
                                     </select>
                                 </div>
@@ -177,7 +159,7 @@ function MyFormModal(props) {
                                         id="seats"
                                         placeholder="Seats"
                                         min="1"
-                                        max="99"
+                                        max="2000"
                                         value={training.seats}
                                         onChange={(e) =>
                                             setTraining({ ...training, seats: e.target.value })
@@ -187,9 +169,6 @@ function MyFormModal(props) {
                                 </div>
                                 <Button type="submit" className="button_" name="Submit">
                                     Submit
-                                </Button>
-                                <Button className="button_" onClick={props.onHide}>
-                                    Close
                                 </Button>
                             </form>
                         </div>

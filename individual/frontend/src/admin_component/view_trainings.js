@@ -3,6 +3,9 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Admin_training from "./create_training";
 import { Link } from "react-router-dom";
+import { displayevent, deleteevent } from "../services/signuploginservice";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 //import './training.css';
 
@@ -13,47 +16,67 @@ function Training(props) {
   const handleButtonClick = () => {
     setShowAdminTraining(true);
   };
-  const handleDelete = async (itemId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5001/api/delete-training/${itemId}`,
-        {
-          method: "DELETE",
-        }
-      );
+  // const handleDelete = async (itemId) => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:5001/api/delete-training/${itemId}`,
+  //       {
+  //         method: "DELETE",
+  //       }
+  //     );
 
-      if (response.ok) {
-        console.log("Item deleted successfully");
-        const updatedTableData = tableData.filter((item) => item.id !== itemId);
-        setTableData(updatedTableData);
+  //     if (response.ok) {
+  //       console.log("Item deleted successfully");
+  //       const updatedTableData = tableData.filter((item) => item.id !== itemId);
+  //       setTableData(updatedTableData);
+  //     } else {
+  //       console.error("Error deleting item");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting item:", error);
+  //   }
+  // };
+
+  const handleDelete = async (itemId) => {
+    const training_id = itemId
+    try {
+        // const response = await axios.post(`http://localhost:5000/users/dtrain`, { training_id });
+        const response = await deleteevent(training_id);
+        console.log(response.data.message)
+        if (response.data.message === 'Training deleted successfully') {
+
+            const updatedTableData = tableData.filter(item => item.id !== itemId);
+            setTableData(updatedTableData);
+            toast.success("Training deleted succesfully")
+           setTimeout(()=>{
+            window.location.reload()
+           },1500)
+        } else {
+            toast.error('Error deleting item');
+        }
+    } catch (error) {
+        console.error('Error deleting item:', error);
+    }
+};
+
+  const fetchData = async () => {
+    try {
+      const response = await displayevent();
+      console.log('response',response)
+      if (response.message = "View success") {
+        setTableData(response.data);
+        console.log(tableData)
       } else {
-        console.error("Error deleting item");
+        console.error("Error response:");
       }
     } catch (error) {
-      console.error("Error deleting item:", error);
+      console.error("Error fetching data:", error);
     }
   };
-
  
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:5001/api/training-data");
-        const text = await response.text();
-        console.log("Response:", text);
-
-        if (response.ok) {
-          console.log("Success");
-          const data = JSON.parse(text);
-          setTableData(data);
-        } else {
-          console.error("Error response:", text);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    
 
     fetchData();
   }, []);
@@ -105,22 +128,22 @@ function Training(props) {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.id}</td>
-                  <td>{item.ProjectName}</td>
-                  <td>{item.Trainer}</td>
-                  <td>{item.Domain}</td>
-                  <td>{item.StartDate}</td>
-                  <td>{item.EndDate}</td>
-                  <td>{item.RegisteredUsers}</td>
-                  <td>{item.VacanciesLeft}</td>
-                  <td>
-                    <button onClick={handleDelete}>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
+              {tableData.map((uData, index) => (
+                <tr key={uData.id}>
+                <td>{uData.id}</td>
+                <td>{uData.event_organizer}</td>
+                
+                <td>{uData.domain} </td>
+                
+                <td>{(uData.startdate).split('T')[0]} </td>
+                <td>{new Date((uData.startdate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })} </td>
+                <td>{(uData.enddate).split('T')[0]}</td>
+                <td>{new Date((uData.enddate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })} </td>
+                <td>{uData.place}</td>
+                <td>{(uData.initial_seats) - (uData.no_of_seats)}</td>
+                <td>{uData.no_of_seats}</td>
+                <td><button onClick={() => handleDelete(uData.id)}><i class="fa-solid fa-trash"></i></button></td>
+            </tr>
               ))}
             </tbody>
           </table>

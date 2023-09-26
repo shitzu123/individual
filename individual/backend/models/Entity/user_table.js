@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        role: {
+            type: DataTypes.STRING,
+            defaultValue: 'user',
+
+        }
             
     },{
         timestamps: false, // This disables createdAt and updatedAt fields

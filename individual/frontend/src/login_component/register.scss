@@ -1,13 +1,19 @@
 // primary properties
 $primary-background: rgb(25,16,91);
 
-
 .signup-container {
     display: flex;
     justify-content: space-between;
-    margin: 4%;
+    width:80%;
+    margin: 6% 10%!important;
     max-height: 60%;
     
+  }
+
+  .signupForm{
+    margin-left: 0px;
+    box-shadow: none !important;
+    background-color: rgb(238, 237, 237);
   }
   
   .signup-left {
@@ -26,7 +32,9 @@ $primary-background: rgb(25,16,91);
   }
 
   form{
+    margin-top: 5%;
     margin-left: 15%;
+    height:60vh;
   }
   .signup-right {
     flex: 1;
@@ -47,6 +55,7 @@ $primary-background: rgb(25,16,91);
     flex-direction: column;
   }
   
+
   .signup-right input {
     margin-bottom: 10px;
     padding: 10px;
@@ -64,7 +73,7 @@ $primary-background: rgb(25,16,91);
     
   }
   .signupbutton{
-    width: 35%;
+    width: 25% !important;
     margin-left: 5%;
   }
   .olduserbutton{
@@ -76,7 +85,7 @@ $primary-background: rgb(25,16,91);
     cursor: pointer;
   }
   .olduserbutton{
-    width: 40%;
+    width: 13% !important;
   }
 
   .olduserbutton:hover{
@@ -86,6 +95,7 @@ $primary-background: rgb(25,16,91);
 
 .input-container {
     position: relative;
+    margin-bottom: 0px !important;
   }
   
   .input-container i {
@@ -94,6 +104,7 @@ $primary-background: rgb(25,16,91);
     top: 25%;
     transform: translateY(-50%);
     color: #ccc;
+    margin-top: 2% !important;
     
   }
   
@@ -103,7 +114,7 @@ $primary-background: rgb(25,16,91);
     border-bottom: 1px solid #ccc; 
     width: 60%; 
     outline: none; 
-    margin-bottom: 8%;
+    // margin-bottom: 8%;
   }
   
   

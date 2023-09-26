@@ -88,11 +88,12 @@ function Signup() {
 
   return (
     <div className="signup-container ">
-      {/* <div className="signup-left">
-        <img src={images[imageIndex]} alt="Registration GIF" />
-      </div> */}
+       <div className="login-left">
+        <ToastContainer />
+        <img src="../register/sports.jpg" alt="Login" />
+      </div>
       <div className="signup-right">
-        <form ref={formRef}>
+        <form className="signupForm" ref={formRef}>
           <ToastContainer />
           <h1>Signup</h1>
           <div className="input-container">

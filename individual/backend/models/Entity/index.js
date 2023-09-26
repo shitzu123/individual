@@ -22,10 +22,14 @@ const sequelize= new Sequelize(
 const db={}
 db.sequelize=sequelize
 db.USER=require("./user_table.js")(sequelize,DataTypes)
-// db.ADMIN_TRAINING=require("./admin/Schedule_training.js")(sequelize,DataTypes)
-// db.TRAININGS=require("./trainings/registered_user_table.js")(sequelize,DataTypes)
+db.ADMIN_TRAINING=require("./training_table.js")(sequelize,DataTypes)
+db.TICKETS = require('./booking_tickets.js')(sequelize,DataTypes)
 
 
+
+
+db.ADMIN_TRAINING.hasMany(db.TICKETS,{ foreignKey: 'eventId' })
+db.TICKETS.belongsTo(db.ADMIN_TRAINING, { foreignKey: 'eventId' });
 db.sequelize.sync({ force: false }, () => {
 
     console.log("Sync done");
